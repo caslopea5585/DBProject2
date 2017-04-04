@@ -28,7 +28,6 @@ public class DBManager {
 			con = DriverManager.getConnection(url,user,password);
 			
 		} catch (ClassNotFoundException e) {
-
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
