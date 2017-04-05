@@ -50,14 +50,12 @@ public class TablePanel extends JPanel{
 	}
 
 	
-	
 	//db가져오기, Book테이블의 레코드 가져오기
 	public void init(){
 		String sql="select * from book order by book_id asc";
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-
 		try {
 			
 			pstmt = con.prepareStatement(sql);

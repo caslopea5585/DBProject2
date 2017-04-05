@@ -21,7 +21,6 @@ public class DBManager {
 	
 	private Connection con;
 	
-	
 	private DBManager(){
 		try {
 			Class.forName(driver);

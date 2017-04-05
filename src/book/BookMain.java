@@ -6,6 +6,7 @@ import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Choice;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,13 +17,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,7 +72,6 @@ public class BookMain extends JFrame implements ItemListener,ActionListener{
 	ArrayList<SubCategory> subcategory = new ArrayList<SubCategory>();
 	
 
-	
 	public BookMain() {
 		p_west = new JPanel();
 		p_content = new JPanel();
@@ -161,7 +159,6 @@ public class BookMain extends JFrame implements ItemListener,ActionListener{
 		ResultSet rs = null;
 		//초이스 컴포넌트에 최상위 목록 보이기!!
 		try {
-		
 			con = manager.getConnection();
 			String sql = "select * from topcategory order by topcategory_id asc";
 			pstmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -262,6 +259,11 @@ public class BookMain extends JFrame implements ItemListener,ActionListener{
 	
 	//상품등록 메서드
 	public void regist(){
+		//기존에 등록된 추가된 컴포넌트가 있다면 컴포넌트 지우기
+		Component[] comp =  p_grid.getComponents();
+		System.out.println(comp.length+"포함된 자식의 수는");
+		
+		
 		//내가 지금 선택한 서브 카테고리 초이스의 index를 구해서 그 index로 ArrayList를 접근하여 객체를 반환받으면
 		//정보를 유용하게 쓸 수 있다..
 		int index = ch_sub.getSelectedIndex();
@@ -287,6 +289,14 @@ public class BookMain extends JFrame implements ItemListener,ActionListener{
 				copy();
 				((TablePanel)p_table).init(); //조회일으킴
 				((TablePanel)p_table).table.updateUI(); //UI갱신
+				
+				
+				for(int i=0;i<comp.length;i++){
+					p_grid.remove(0);
+				}
+				((GridPanel)p_grid).loadData();
+		
+				
 
 			}else{
 				System.out.println(book_name+"실패");
